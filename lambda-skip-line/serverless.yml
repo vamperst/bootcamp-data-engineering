@@ -1,0 +1,10 @@
+service: demo-bigdata
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  timeout: 60
+
+functions:
+  transform:
+    handler: handler.transform
