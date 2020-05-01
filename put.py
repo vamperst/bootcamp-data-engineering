@@ -3,6 +3,8 @@ import json
 import uuid
 import time
 
+
+
 kinesis = KinesisHandler('teste2')
 # while(True):
 raw = open('demofile2.json', 'r').read()

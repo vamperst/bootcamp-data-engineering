@@ -38,7 +38,7 @@ replacement = ""
 reverse_replacement = replacement[::-1]
 fileContent = fileContent[::-1].replace(reverse_removal,
                                   reverse_replacement, 1)[::-1]
-f = open("demofile2.json", "a")
+f = open("inventory.part.00.json", "a")
 f.write(fileContent)
 f.close()
 # print(json.dumps(listRows))
