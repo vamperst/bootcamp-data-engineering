@@ -1,0 +1,31 @@
+service: get-from-sqs-to-firehose
+provider:
+  name: aws
+  runtime: python3.8
+  region: us-east-1
+
+
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "firehose:*"
+      Resource: 
+        - "arn:aws:firehose:us-east-1:*:deliverystream/*"
+    - Effect: "Allow"
+      Action:
+        - "s3:*"
+      Resource: 
+        - "arn:aws:s3:::*"
+
+
+functions:
+  put:
+    handler: handler.handler
+    memorySize: 1024
+    timeout: 300
+    environment:
+      urlSQS: "https://sqs.us-east-1.amazonaws.com/474339980368/teste2"
+    events:
+      - sqs:
+          arn: arn:aws:sqs:us-east-1:474339980368:teste2
+          batchSize: 1

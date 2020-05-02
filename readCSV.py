@@ -58,6 +58,7 @@ def createJsonFromCSVInS3(bucket,key):
           
           listRows.append(data)
           # countLine += 1
+          
 
   fileContent=""
   escapeChar = "\n"

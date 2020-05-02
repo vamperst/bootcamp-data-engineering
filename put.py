@@ -18,9 +18,12 @@ for line in lines:
         kinesis.put_record(listLines)
         cont=0
         listLines=[]
-        print("enviou")
+        # print("enviou")
     else:
         cont += 1
+if len(listLines) > 0:
+    kinesis.put_record(listLines)
+    print("enviou")
         
 
 
