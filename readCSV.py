@@ -44,15 +44,21 @@ def createJsonFromCSVInS3(bucket,key):
   listRows = []
   obj = s3.Object(bucket, key)
 
+  # countLine = 1
   for line in obj.get()['Body']._raw_stream:
         s = StringIO(line.decode("utf-8"))
         linha = csv.reader(s, skipinitialspace=True)
+        
         for row in linha:
           data={}
+          # print("linha: "+str(countLine))
           for i in range(len(collumns)-1):
+            # print("coluna: " + str(i))
             data[collumns[i]] = row[i]
           
           listRows.append(data)
+          # countLine += 1
+
   fileContent=""
   escapeChar = "\n"
   for row in listRows:
@@ -83,13 +89,15 @@ def createJsonFromCSVInS3(bucket,key):
 
   # os.remove(tmpFile)
 
-while True:
-  receiptHandle, messageStr = getMessageFromQueue(urlSQS)
-  if receiptHandle == None:
-    print("nada")
-    break
-  else:
-      print(messageStr)
-      message = json.loads(messageStr)
-      createJsonFromCSVInS3(message["bucket"], message["key"])
-      deleteMessageFromQueue(urlSQS, receiptHandle)
+
+# while True:
+#   receiptHandle, messageStr = getMessageFromQueue(urlSQS)
+#   if receiptHandle == None:
+#     print("nada")
+#     break
+#   else:
+#       print(messageStr)
+#       message = json.loads(messageStr)
+#       createJsonFromCSVInS3(message["bucket"], message["key"])
+#       deleteMessageFromQueue(urlSQS, receiptHandle)
+createJsonFromCSVInS3("teste-dms-rafbarbo", "files-small/inventory.part.00")

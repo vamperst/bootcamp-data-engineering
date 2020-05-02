@@ -1,0 +1,27 @@
+service: put-in-sqs-from-s3-json
+provider:
+  name: aws
+  runtime: python3.8
+  region: us-east-1
+
+
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "sqs:*"
+      Resource: 
+        - "arn:aws:sqs:us-east-1:*:*"
+
+
+functions:
+  put:
+    handler: handler.handler
+    environment:
+      urlSQS: "https://sqs.us-east-1.amazonaws.com/474339980368/teste2"
+    events:
+      - s3:
+         bucket: teste-dms-rafbarbo
+         event: s3:ObjectCreated:*
+         rules:
+            - prefix: json/
+         existing: true
