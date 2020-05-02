@@ -23,6 +23,7 @@ functions:
     handler: handler.handler
     memorySize: 1024
     timeout: 300
+    reservedConcurrency: 6
     environment:
       urlSQS: "https://sqs.us-east-1.amazonaws.com/474339980368/teste2"
     events:
