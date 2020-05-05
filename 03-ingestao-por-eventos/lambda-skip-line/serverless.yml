@@ -1,4 +1,4 @@
-service: demo-bigdata
+service: events-skip-line
 
 provider:
   name: aws
