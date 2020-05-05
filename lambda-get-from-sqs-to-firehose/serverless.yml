@@ -23,10 +23,10 @@ functions:
     handler: handler.handler
     memorySize: 1024
     timeout: 300
-    reservedConcurrency: 6
+    reservedConcurrency: 20
     environment:
-      urlSQS: "https://sqs.us-east-1.amazonaws.com/474339980368/teste2"
+      deliveryStream: "json-ingest"
     events:
       - sqs:
-          arn: arn:aws:sqs:us-east-1:474339980368:teste2
+          arn: arn:aws:sqs:us-east-1:764597347320:raw-json
           batchSize: 1

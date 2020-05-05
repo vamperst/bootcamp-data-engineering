@@ -17,11 +17,11 @@ functions:
   put:
     handler: handler.handler
     environment:
-      urlSQS: "https://sqs.us-east-1.amazonaws.com/474339980368/teste2"
+      urlSQS: "https://sqs.us-east-1.amazonaws.com/764597347320/raw-json"
     events:
       - s3:
-         bucket: teste-dms-rafbarbo
+         bucket: bootcamp-fiap-rafael
          event: s3:ObjectCreated:*
          rules:
-            - prefix: json/
+            - prefix: raw_json/
          existing: true

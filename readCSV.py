@@ -53,7 +53,7 @@ def createJsonFromCSVInS3(bucket,key):
         for row in linha:
           data={}
           # print("linha: "+str(countLine))
-          data["id"]=str(uuid.uuid4())
+          data["id"]=str(uuid.uuid4()
           for i in range(len(collumns)-1):
             # print("coluna: " + str(i))
             data[collumns[i]] = row[i]

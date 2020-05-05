@@ -4,12 +4,12 @@ import os
 from kinesisHandler import KinesisHandler
 from io import StringIO
 
-
+deliveryStream = os.environ['deliveryStream']
 def handler(event, context):
     print(str(event))
     # print(str(context))
 
-    kinesis = KinesisHandler('teste2')
+    kinesis = KinesisHandler(deliveryStream)
     s3 = boto3.resource('s3')
     
     for record in event['Records']:
