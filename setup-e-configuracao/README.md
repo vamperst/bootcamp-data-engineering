@@ -29,7 +29,8 @@
 16. Para utilizar o SDK em python da AWS instale com o comando `pip3 install boto3`
 17. Iremos utilizar um dataset do kaggle para fazer o bootcamp, instale o sdk da api para conseguir fazer o download via terminal `pip install kaggle`
 18. Em outra aba do navegador entre na sua conta do kaggle - [login](https://www.kaggle.com/city-of-seattle/seattle-library-collection-inventory)
-19. No canto direito superior clique na sua foto e clique em 'My account'
+19. No canto direito superior clique na sua foto e clique em 'My account':
+    
     ![](img/kaggleAccount.png)
 20. Desça a tela até a opção API e clique em 'Create new API Token'
     ![](img/createTokenKaggle.png)
