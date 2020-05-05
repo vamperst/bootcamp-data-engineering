@@ -25,24 +25,24 @@
 13. Execute o comando `cd bootcamp-data-engineering/` para entrar na pasta criada pelo git
 14. Execute o comando `cd setup-e-configuracao/` para entrar na pasta com os scripts de Configuração.
 15. Precisamos aumentar o tamanho do volume(HD) do cloud9. Para isso execute o comando  `sh resize.sh`
-   ![img/terraformInstall](img/terraformInstall.png)
+   ![img/resizeEBS](img/resizeEBS.png)
+16. Para utilizar o SDK em python da AWS instale com o comando `pip3 install boto3`
+17. Iremos utilizar um dataset do kaggle para fazer o bootcamp, instale o sdk da api para conseguir fazer o download via terminal `pip install kaggle`
+18. Em outra aba do navegador entre na sua conta do kaggle - [login](https://www.kaggle.com/city-of-seattle/seattle-library-collection-inventory)
+19. No canto direito superior clique na sua foto e clique em 'My account'
+    ![](img/kaggleAccount.png)
+20. Desça a tela até a opção API e clique em 'Create new API Token'
+    ![](img/createTokenKaggle.png)
+21. Um arquivo, kaggle.json ,será baixado para sua maquina, abra o arquivo e copie o conteúdo.
+22. De volta ao terminal do Cloud9, execute o comando `mkdir -p ~/.kaggle`
+23. Execute o comando abaixo copiando o conteudo do kaggle.json que baixou e colocando entre aspas simples como na imagem:
+    ```
+      echo 'SEU JSON USER COM TOKEN' >> ~/.kaggle/kaggle.json
+    ```
+    ![](IMG/../img/setTokenKaggle.png)
+24. Execute o comando `chmod 600 ~/.kaggle/kaggle.json` para colcoar a permissão certa no token
+25. Vamos criar o lugar onde ficarão os dados na maquina. Para isso crie a pasta com o comando ` mkdir ~/environment/seattle-library-collection-inventory` e entre nela `cd ~/environment/seattle-library-collection-inventory`
+26. Vamos baixar o dataset na maquina com o comando `kaggle datasets download -d city-of-seattle/seattle-library-collection-inventory`
+27. AO termino do download execute o comando `unzip seattle-library-collection-inventory.zip` para descompactar o conteúdo.
+28. Apague o zip que baixou e já não é mais necessário com comando `rm seattle-library-collection-inventory.zip`
 
-    ## >>> As etapas a seguir devem ser executadas a cada 3 horas pois as chaves sofrem alteração <<<
-16. No seu navegador vá a pagina do labs.vocareum.com por onde você entrou na sua conta. 
-   ![](img/vocareum.png)
-18. Clique em 'Account Details'
-19. Clique em 'Show' e copie o conteudo que aparece em destaque
-   ![](img/clishow.png)
-20.  Devolta a tela do IDE do Cloud9 clique em 'AWS Cloud9' no canto superior esquerdo e escolha 'Preferences'
-   ![](img/preferencescloud9.png)
-21. Escolha 'AWS SETTINGS' no menu lateral e desabilite a função 'AWS managed temporary credentials'
-    ![](img/credentialsDisable.png)
-22. De volta ao terminal do Cloud9 utilize o comando `rm ~/.aws/credentials` 
-23. Utilize o comando `nano ~/.aws/credentials` para atribuir valores ao arquivo
-24. Cole o conteudo da credential que copiou do vocareum
-25. Salve com pressionando as teclas 'Control(CTRL) + X' e após 'Y'
-
-
-    
-
-    
