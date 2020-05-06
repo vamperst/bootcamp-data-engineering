@@ -77,20 +77,9 @@ def createJsonFromCSVInS3(bucket,key):
                                     reverse_replacement, 1)[::-1]
   filename = key.split("/")[1] + ".json"
   print(filename)
-  # tmpFile = "/tmp/" + filename 
-  # print(tmpFile)
-  # f = open(tmpFile, "a")
-  # f.write(fileContent)
-  # f.close()
+ 
   object = s3.Object(bucket, "json/"+filename)
   object.put(Body=fileContent.encode())
-  # response = s3Client.put_object(
-  #     Body=tmpFile,
-  #     Bucket=bucket,
-  #     Key="json/"+filename,
-  # )
-
-  # os.remove(tmpFile)
 
 
 while True:
