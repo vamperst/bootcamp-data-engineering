@@ -1,4 +1,4 @@
-# Setup e Configuração de ambiente
+# 01 - Setup e Configuração de ambiente
 
 
  1. Abra o console da AWS e va para o serviço `Cloud 9`.
