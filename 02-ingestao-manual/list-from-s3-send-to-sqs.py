@@ -5,8 +5,9 @@ import uuid
 s3 = boto3.client('s3')
 sqs = boto3.client('sqs')
 
-bucket = 'teste-dms-rafbarbo'
-urlSQS = 'https://sqs.us-east-1.amazonaws.com/474339980368/teste'
+bucket = 'bootcamp-data-engineering-12345'
+urlSQS = 'https://sqs.us-east-1.amazonaws.com/764597347320/raw-json'
+keyprefix = 'json/'
 
 def getListofKeyObjects(bucket,keyPrefix):
 
@@ -45,7 +46,7 @@ def sendToQueue(url, listToSend):
     )
     print(response)
 
-listObjectKeys = getListofKeyObjects(bucket,'files-small/')   
+listObjectKeys = getListofKeyObjects(bucket,keyprefix)   
 listOfLists = mountMessagesToSQS(listObjectKeys)
 for listToSend in listOfLists:
     sendToQueue(urlSQS,listToSend)

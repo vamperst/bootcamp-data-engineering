@@ -10,8 +10,9 @@ import uuid
 s3 = boto3.resource('s3')
 s3Client = boto3.client('s3')
 sqs = boto3.client('sqs')
-bucket = 'teste-dms-rafbarbo'
-urlSQS = 'https://sqs.us-east-1.amazonaws.com/474339980368/teste'
+
+bucket = 'bootcamp-data-engineering-12345'
+urlSQS = 'https://sqs.us-east-1.amazonaws.com/764597347320/small-files-csv'
 
 collumns = ["BibNum", "Title", "Author",
             "ISBN", "PublicationYear", "Publisher", "Publisher", 
@@ -53,7 +54,7 @@ def createJsonFromCSVInS3(bucket,key):
         for row in linha:
           data={}
           # print("linha: "+str(countLine))
-          data["id"]=str(uuid.uuid4()
+          data["id"]=str(uuid.uuid4())
           for i in range(len(collumns)-1):
             # print("coluna: " + str(i))
             data[collumns[i]] = row[i]

@@ -16,13 +16,11 @@ class KinesisHandler:
                 }
             )
 
-        print(len(json.dumps(listData)))
+        # print(len(json.dumps(listData)))
         return listData
 
     def put_record(self, listLine):
-        # print(self.__prepareDataToFirehoseCall(listLine))
         response = self.__kinesis.put_record_batch(
             DeliveryStreamName=self.__streamName,
             Records=self.__prepareDataToFirehoseCall(listLine)
         )
-        # print(json.dumps(response))

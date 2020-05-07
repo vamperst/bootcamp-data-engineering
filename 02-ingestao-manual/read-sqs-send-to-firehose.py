@@ -2,12 +2,15 @@ from kinesisHandler import KinesisHandler
 import json
 import uuid
 import time
+import boto3
+from io import StringIO
 
 
 
-kinesis = KinesisHandler('teste2')
+kinesis = KinesisHandler('ingest-json')
 s3 = boto3.resource('s3')
-urlSQS = 'https://sqs.us-east-1.amazonaws.com/474339980368/teste'
+sqs = boto3.client('sqs')
+urlSQS = 'https://sqs.us-east-1.amazonaws.com/764597347320/raw-json'
 
 
 def getMessageFromQueue(urlSQS):
@@ -15,11 +18,10 @@ def getMessageFromQueue(urlSQS):
         QueueUrl=urlSQS,
         MaxNumberOfMessages=1
     )
-    print(json.dumps(response))
     if "Messages" in response:
         receiptHandle = response["Messages"][0]["ReceiptHandle"]
         message = response["Messages"][0]["Body"]
-        return receiptHandle, message
+        return receiptHandle, json.loads(message)
     else:
         return None, None
 
@@ -29,7 +31,7 @@ def deleteMessageFromQueue(urlSQS, receiptHandle):
         QueueUrl=urlSQS,
         ReceiptHandle=receiptHandle
     )
-    print(json.dumps(response))
+    print("message deleted: " + json.dumps(response))
 
 
 def readObjectAndSendToFirehose(bucket, key):
@@ -38,14 +40,11 @@ def readObjectAndSendToFirehose(bucket, key):
     listLines = []
     for line in obj.get()['Body']._raw_stream:
         s = StringIO(line.decode("utf-8"))
-        # print(type(s))
-        # print(str(s))
         listLines.append(s.getvalue())
         if cont == 150:
             kinesis.put_record(listLines)
             cont = 0
             listLines = []
-            # print("enviou")
         else:
             cont += 1
     if len(listLines) > 0:
@@ -53,17 +52,16 @@ def readObjectAndSendToFirehose(bucket, key):
         print("enviou fora for")
 
 while True:
-    receiptHandle, messageStr = getMessageFromQueue(urlSQS)
+    receiptHandle, message = getMessageFromQueue(urlSQS)
     if receiptHandle == None:
         print("acabou a fila")
         break
     else:
-        receiptHandle, message = getMessageFromQueue(urlSQS)
+        print("received message: " + str(message))
         bucket = message["bucket"]
         key = message["key"]
         readObjectAndSendToFirehose(bucket, key)
         deleteMessageFromQueue(urlSQS,receiptHandle)
-        print("processou mensage:" + str(message))
 
 print("terminou com sucesso")
 
