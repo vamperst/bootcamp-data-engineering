@@ -25,7 +25,7 @@ def handler(event, context):
             # print(str(s))
             listLines.append(line.decode("utf-8"))
 
-            if cont == 150:
+            if cont == 498:
                 kinesis.put_record(listLines)
                 cont = 0
                 listLines = []

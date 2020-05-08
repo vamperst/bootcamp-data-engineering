@@ -22,8 +22,9 @@ functions:
   put:
     handler: handler.handler
     memorySize: 1024
-    timeout: 300
+    timeout: 120
     reservedConcurrency: 5
+    provisionedConcurrency: 1
     environment:
       deliveryStream: "ingest-json"
     events:
