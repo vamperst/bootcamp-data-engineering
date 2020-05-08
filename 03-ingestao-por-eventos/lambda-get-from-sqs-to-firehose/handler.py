@@ -2,7 +2,6 @@ import boto3
 import json
 import os
 from kinesisHandler import KinesisHandler
-from io import StringIO
 
 deliveryStream = os.environ['deliveryStream']
 def handler(event, context):
@@ -22,10 +21,9 @@ def handler(event, context):
         cont = 0
         listLines = []
         for line in obj.get()['Body']._raw_stream:
-            s = StringIO(line.decode("utf-8"))
             # print(type(s))
             # print(str(s))
-            listLines.append(s.getvalue())
+            listLines.append(line.decode("utf-8"))
 
             if cont == 150:
                 kinesis.put_record(listLines)

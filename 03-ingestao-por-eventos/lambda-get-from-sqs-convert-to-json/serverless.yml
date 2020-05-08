@@ -1,4 +1,4 @@
-service: get-from-sqs-to-firehose
+service: get-from-sqs-convert-to-json
 provider:
   name: aws
   runtime: python3.8
@@ -8,25 +8,19 @@ provider:
   iamRoleStatements:
     - Effect: "Allow"
       Action:
-        - "firehose:*"
-      Resource: 
-        - "arn:aws:firehose:us-east-1:*:deliverystream/*"
-    - Effect: "Allow"
-      Action:
         - "s3:*"
       Resource: 
         - "arn:aws:s3:::*"
 
 
 functions:
-  put:
+  func:
     handler: handler.handler
     memorySize: 1024
-    timeout: 300
-    reservedConcurrency: 5
+    timeout: 120
     environment:
       deliveryStream: "ingest-json"
     events:
       - sqs:
-          arn: arn:aws:sqs:us-east-1:764597347320:raw-json
+          arn: arn:aws:sqs:us-east-1:764597347320:small-files-csv
           batchSize: 1
