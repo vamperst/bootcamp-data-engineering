@@ -1,4 +1,4 @@
-service: put-in-sqs-from-s3-json
+service: put-in-sqs-from-s3
 provider:
   name: aws
   runtime: python3.8
@@ -14,14 +14,25 @@ provider:
 
 
 functions:
-  put:
+  small-files-csv:
+    handler: handler.handler
+    environment:
+      urlSQS: "https://sqs.us-east-1.amazonaws.com/764597347320/small-files-csv"
+    events:
+      - s3:
+         bucket: bootcamp-data-engineering-12345
+         event: s3:ObjectCreated:*
+         rules:
+            - prefix: files-small/
+         existing: true
+  raw-json:
     handler: handler.handler
     environment:
       urlSQS: "https://sqs.us-east-1.amazonaws.com/764597347320/raw-json"
     events:
       - s3:
-         bucket: bootcamp-fiap-rafael
+         bucket: bootcamp-data-engineering-12345
          event: s3:ObjectCreated:*
          rules:
-            - prefix: raw_json/
+            - prefix: json/
          existing: true

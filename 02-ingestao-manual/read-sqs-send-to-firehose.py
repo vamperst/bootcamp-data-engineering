@@ -39,9 +39,9 @@ def readObjectAndSendToFirehose(bucket, key):
     cont = 0
     listLines = []
     for line in obj.get()['Body']._raw_stream:
-        s = StringIO(line.decode("utf-8"))
-        listLines.append(s.getvalue())
-        if cont == 150:
+        # s = StringIO(line.decode("utf-8"))
+        listLines.append(line.decode("utf-8"))
+        if cont == 498:
             kinesis.put_record(listLines)
             cont = 0
             listLines = []

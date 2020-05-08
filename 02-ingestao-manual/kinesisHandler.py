@@ -1,5 +1,6 @@
 import boto3
 import json
+import base64
 
 
 class KinesisHandler:
@@ -15,7 +16,9 @@ class KinesisHandler:
                     "Data": line
                 }
             )
-
+        
+        print(len(listData))
+        # print(len(json.dumps(listData).encode('utf-8')))
         # print(len(json.dumps(listData)))
         return listData
 
@@ -24,3 +27,7 @@ class KinesisHandler:
             DeliveryStreamName=self.__streamName,
             Records=self.__prepareDataToFirehoseCall(listLine)
         )
+        if(response['FailedPutCount'] > 0):
+            print(response)
+            print("FailedPutCount: " + str(response['FailedPutCount']))
+            exit
