@@ -21,27 +21,24 @@
     ![](img/s3-1.png)
 13. Devolta ao terminal do CLoud9, agora vamos retirar o cabeçalho do primeiro arquivo para que não atrapalhe na ingestão. Para tal utilize o comando `sed -i '$d' files-small/inventory.part.00`
     ![](img/sed1.png)
-14. Agora é hora de colocar os arquivos no S3, para isso execute o comando: `aws s3 cp --recursive ~/environment/seattle-library-collection-inventory/files-small/ s3://bootcamp-data-engineering-<SEU RM>/files-small/`
-15. Vá para a pasta do projeto que baixou do git com o comando `cd ~/environment/bootcamp-data-engineering/02-ingestao-manual/`
-16. No IDE navegue até o arquivo `list-from-s3-send-to-sqs.py` e altere o valor da variavel `bucket` pelo nome do bucket que criou, a variável `urlSQS` pela URL da fila `files-small-csv` que criou e a variável `keyprefix` com o conteudo 'files-small/'. 
+15. Execute o comando `rm files-small/inventory.part.9*` para deixar apenas 90 arquivos gerando um total de 4.5Gb deixando as fases do bootcamp mais rápidas.
+16. Agora é hora de colocar os arquivos no S3, para isso execute o comando: `aws s3 cp --recursive ~/environment/seattle-library-collection-inventory/files-small/ s3://bootcamp-data-engineering-<SEU RM>/files-small/`
+17. Vá para a pasta do projeto que baixou do git com o comando `cd ~/environment/bootcamp-data-engineering/02-ingestao-manual/`
+18. No IDE navegue até o arquivo `list-from-s3-send-to-sqs.py` e altere o valor da variavel `bucket` pelo nome do bucket que criou, a variável `urlSQS` pela URL da fila `files-small-csv` que criou e a variável `keyprefix` com o conteudo 'files-small/'. 
     ![](img/ide1.png)
     ![](img/sqs5.png)
-17. Execute o arquivo no terminal com o comando `python3 list-from-s3-send-to-sqs.py`
-18. Se for ao painel do sqs e atualizar verá que a fila files-small-csv tem 356 itens disponiveis. Um para que arquivo no S3. Essa é uma maneira segura de consumir os arquivos e garantir que caso tenha uma falha o registro vá para a fila de DLQ, sendo facilmente restreavel.
-19. Agora é necessário consumir a fila, converter e salvar os jsons no S3. Para isso altere as variaveis `bucket` e `urlSQS` como fez no passo 16 no arquivo `read-sqs-convert-csv-to-json.py`.
-20. Execute o comando `python3 read-sqs-convert-csv-to-json.py` para executar o arquivo e iniciar o processo.
-21. O processo pode demorar, para acelerar pode abrir até 4 terminais, entrar na pasta e exevutar o comando do passo 20. Até 4 porque seria o limite da maquina já que essa operação consome bastante IO e CPU. É possivel acompanhar o progresso atualizando o painel do SQS.
-22. Após o fim da execução vamos precisar novamente do arquivo `list-from-s3-send-to-sqs.py`, dessa vez altere a variável `urlSQS` para a URL da fila `raw-json` e a variável `keyprefix` para o conteúdo 'json/'
+19. Execute o arquivo no terminal com o comando `python3 list-from-s3-send-to-sqs.py`
+20. Se for ao painel do sqs e atualizar verá que a fila files-small-csv tem 90 itens disponiveis. Um para que arquivo no S3. Essa é uma maneira segura de consumir os arquivos e garantir que caso tenha uma falha o registro vá para a fila de DLQ, sendo facilmente restreavel.
+21. Agora é necessário consumir a fila, converter e salvar os jsons no S3. Para isso altere as variaveis `bucket` e `urlSQS` como fez no passo 16 no arquivo `read-sqs-convert-csv-to-json.py`.
+22. Execute o comando `python3 read-sqs-convert-csv-to-json.py` para executar o arquivo e iniciar o processo.
+23. O processo pode demorar, para acelerar pode abrir até 4 terminais, entrar na pasta e exevutar o comando do passo 20. Até 4 porque seria o limite da maquina já que essa operação consome bastante IO e CPU. É possivel acompanhar o progresso atualizando o painel do SQS.
+24. Após o fim da execução vamos precisar novamente do arquivo `list-from-s3-send-to-sqs.py`, dessa vez altere a variável `urlSQS` para a URL da fila `raw-json` e a variável `keyprefix` para o conteúdo 'json/'
     ![](img/ide3.png)
-23. No terminal execute o comando `python3 list-from-s3-send-to-sqs.py`. Isso irá preencher a fila `raw-json` com 356 registros correspondentes aos arquivos na pasta json.
-24. Vamos criar o lambda que será utilizado pelo firehose. Execute o comando `cd lambda-skip-line/` e dentro da pasta execute `sls deploy`
-    ![](img/sls1.png)
-25. Vamos criar o kinesis firehose que vamos utilizar nesse bootcamp. Em outra aba vá para o console do kinesis. CLique em `Criar stream de entrega`
+25. No terminal execute o comando `python3 list-from-s3-send-to-sqs.py`. Isso irá preencher a fila `raw-json` com 90 registros correspondentes aos arquivos na pasta json.
+26. Vamos criar o kinesis firehose que vamos utilizar nesse bootcamp. Em outra aba vá para o console do kinesis. CLique em `Criar stream de entrega`
     ![](img/kinesis1.png)
-26. De o nome de `ingest-json` e clique em 'next'
+27. De o nome de `ingest-json` e clique em 'next'
     ![](img/kinesis2.png)
-27. Na seção `Transform source records with AWS Lambda` deixe como na imagem escolhendo o lambda que acabou de criar e clique em 'next'.
-    ![](img/kinesis3.png)
 28. Na seção 'S3 destination' escolha o bucket que acabou de criar.
 29. Na seção 'S3 prefix' coloque os valores `ingested-json/` em 'Prefix - optional', `ingested-json-error/` em 'Error prefix - optional'.
 30. Na secão 'S3 backup' escolha o bucket que criou e popule `source_records_ingested/` em 'Prefix - optional' e clique em 'Next'
