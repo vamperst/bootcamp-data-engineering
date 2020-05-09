@@ -18,8 +18,6 @@ functions:
     handler: handler.handler
     memorySize: 1024
     timeout: 120
-    environment:
-      deliveryStream: "ingest-json"
     events:
       - sqs:
           arn: arn:aws:sqs:us-east-1:764597347320:small-files-csv
