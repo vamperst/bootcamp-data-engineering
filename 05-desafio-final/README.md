@@ -2,4 +2,8 @@
 
 1. Crie uma transformação de Ingested-json para o formato AVRO(Mesmo procedimento de parquet).
 2. Crie um crawler para a pasta AVRO
-3. Copie o script pyspark criado pelo Glue e tire prints do crawler e tabela no Athena. Coloque tudo em um zip e entregue no portal FIAP.
+3. Submeta um zip no portal da FIAP com o seguinte conteudo:
+   1. script pyspark criado pelo Glue
+   2. Prints do crawler
+   3. Prints conteudo pasta S3
+   4. Prints tabela Athena
