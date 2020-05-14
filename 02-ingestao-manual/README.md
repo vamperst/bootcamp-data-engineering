@@ -56,5 +56,5 @@
     ![](img/sqs6.png)
 39. De volta ao cloud9, altere o arquivo `read-sqs-send-to-firehose.py` colocando a URL da fila `raw-json` na variável `urlSQS`
     ![](img/kinesis8.png)
-40. Após 20 segundos da inserção, execute o comando `python3 read-sqs-send-to-firehose.py` para ler os arquivos do S3 que estão listados no SQS e mandar para o Firehose. Pode executar esse comando em até 10 terminais na maquina. O processo pode ser acompanhado no painel do SQS.
+40. Após 20 segundos da inserção, execute o comando `python3 read-sqs-send-to-firehose.py` para ler os arquivos do S3 que estão listados no SQS e mandar para o Firehose.
 41. É possivel ver os arquivos sendo criados no S3 dentro da pasta ingested-json
