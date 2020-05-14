@@ -24,4 +24,7 @@ class KinesisHandler:
             DeliveryStreamName=self.__streamName,
             Records=self.__prepareDataToFirehoseCall(listLine)
         )
+        if(response['FailedPutCount'] > 0):
+            # print(response)
+            print("FailedPutCount: " + str(response['FailedPutCount']))
         # print(json.dumps(response))
