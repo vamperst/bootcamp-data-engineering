@@ -24,7 +24,7 @@ functions:
     memorySize: 1024
     timeout: 120
     reservedConcurrency: 5
-    provisionedConcurrency: 1
+    provisionedConcurrency: 3
     environment:
       deliveryStream: "ingest-json"
     events:
