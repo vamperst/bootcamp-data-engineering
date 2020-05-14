@@ -6,7 +6,7 @@
    ![](img/sqs1.png)
 2. Inicialmente vamos criar as 2 filas DLQ: `raw-json-dlq` e `small-files-csv-dlq`. 'Clique em criar uma nova fila', apenas coloque os nomes, mantenha as opções padrão e clique em 'Criar fila rápido'.
    ![](img/sqs2.png)
-3. Agora vamos as filas principais: `raw-json` e `small-files-csv`. Clique novamente em 'Clique em criar uma nova fila' coloque o nome e clique em configurar fila. Em `Configurações da Fila de mensagens mortas` deixe como na imagem. Lembrando que cada fila tem sua respectiva DLQ. E clique em `Criar fila`
+3. Agora vamos as filas principais: `raw-json` e `small-files-csv`. Clique novamente em 'Clique em criar uma nova fila' coloque o nome e clique em 'configurar fila'. Em `Configurações da Fila de mensagens mortas` deixe como na imagem. Lembrando que cada fila tem sua respectiva DLQ. E clique em `Criar fila`
    ![](img/sqs3.png)
 4. Ao final devem haver 4 filas:
    ![](img/sqs4.png)
@@ -31,7 +31,7 @@
 20. Se for ao painel do sqs e atualizar verá que a fila files-small-csv tem 90 itens disponiveis. Um para que arquivo no S3. Essa é uma maneira segura de consumir os arquivos e garantir que caso tenha uma falha o registro vá para a fila de DLQ, sendo facilmente restreavel.
 21. Agora é necessário consumir a fila, converter e salvar os jsons no S3. Para isso altere as variaveis `bucket` e `urlSQS` como fez no passo 16 no arquivo `read-sqs-convert-csv-to-json.py`.
 22. Execute o comando `python3 read-sqs-convert-csv-to-json.py` para executar o arquivo e iniciar o processo.
-23. O processo pode demorar, para acelerar pode abrir até 4 terminais, entrar na pasta e exevutar o comando do passo 20. Até 4 porque seria o limite da maquina já que essa operação consome bastante IO e CPU. É possivel acompanhar o progresso atualizando o painel do SQS.
+23. O processo pode demorar, para acelerar pode abrir até 4 terminais. Até 4 porque seria o limite da maquina já que essa operação consome bastante IO e CPU. É possivel acompanhar o progresso atualizando o painel do SQS.
 24. Após o fim da execução vamos precisar novamente do arquivo `list-from-s3-send-to-sqs.py`, dessa vez altere a variável `urlSQS` para a URL da fila `raw-json` e a variável `keyprefix` para o conteúdo 'json/'
     ![](img/ide3.png)
 25. No terminal execute o comando `python3 list-from-s3-send-to-sqs.py`. Isso irá preencher a fila `raw-json` com 90 registros correspondentes aos arquivos na pasta json.
@@ -39,21 +39,22 @@
     ![](img/kinesis1.png)
 27. De o nome de `ingest-json` e clique em 'next'
     ![](img/kinesis2.png)
-28. Na seção 'S3 destination' escolha o bucket que acabou de criar.
-29. Na seção 'S3 prefix' coloque os valores `ingested-json/` em 'Prefix - optional', `ingested-json-error/` em 'Error prefix - optional'.
-30. Na secão 'S3 backup' escolha o bucket que criou e popule `source_records_ingested/` em 'Prefix - optional' e clique em 'Next'
+28. Clique em `Next` novamente.
+29. Na seção 'S3 destination' escolha o bucket que acabou de criar.
+30. Na seção 'S3 prefix' coloque os valores `ingested-json/` em 'Prefix - optional', `ingested-json-error/` em 'Error prefix - optional'.
+31. Na secão 'S3 backup' escolha o bucket que criou e popule `source_records_ingested/` em 'Prefix - optional' e clique em 'Next'
     ![](img/kinesis4.png)
-31. Na seção 'S3 buffer conditions' coloque o valor `100` em 'Buffer size' e `300` em 'Buffer interval'.
+32. Na seção 'S3 buffer conditions' coloque o valor `100` em 'Buffer size' e `300` em 'Buffer interval'.
     ![](img/kinesis5.png)
-32. Na seção 'Permissions' clique em 'Create new or choose'
-33. Na aba que abriu apenas clique em 'permitir' no canto infeiror direito para criar o IAM do firehose.
+33. Na seção 'Permissions' clique em 'Create new or choose'
+34. Na aba que abriu apenas clique em 'permitir' no canto infeiror direito para criar o IAM do firehose.
     ![](img/kinesis7.png)
-34. Clique em 'Next'
-35. Revise as informações e clique em `Create delivery stream`
-36. Vamos alterar um parametro da fila `raw-json`. Vá até o painel do sqs, selecione a fila e clique em 'Açoes de fila'. Clique na opção `Configurar fila`
-37. Altere o valor de 'Tempo limite de visibilidade padrão' para `2 MINUTOS` e 'Atraso de entrega' para `20 segundos`. O primeiro parametro é o tempo que o consumidor tem para deletar o registro da fila após ler. O segundo é o tempo de atraso da primeira entrega do registro na fila, ele é interessante pois o S3 é assincrono e pode demorar alguns poucos segundos para o objeto ficar disponível.
+35. Clique em 'Next'
+36. Revise as informações e clique em `Create delivery stream`
+37. Vamos alterar um parametro da fila `raw-json`. Vá até o painel do sqs, selecione a fila e clique em 'Açoes de fila'. Clique na opção `Configurar fila`
+38. Altere o valor de 'Tempo limite de visibilidade padrão' para `2 MINUTOS` e 'Atraso de entrega' para `20 segundos`. O primeiro parametro é o tempo que o consumidor tem para deletar o registro da fila após ler. O segundo é o tempo de atraso da primeira entrega do registro na fila, ele é interessante pois o S3 é assincrono e pode demorar alguns poucos segundos para o objeto ficar disponível.
     ![](img/sqs6.png)
-38. De volta ao cloud9, altere o arquivo `read-sqs-send-to-firehose.py` colocando a URL da fila `raw-json` na variável `urlSQS`
+39. De volta ao cloud9, altere o arquivo `read-sqs-send-to-firehose.py` colocando a URL da fila `raw-json` na variável `urlSQS`
     ![](img/kinesis8.png)
-39. Após 20 segundos da inserção, execute o comando `python3 read-sqs-send-to-firehose.py` para ler os arquivos do S3 que estão listados no SQS e mandar para o Firehose. Pode executar esse comando em até 10 terminais na maquina. O processo pode ser acompanhado no painel do SQS.
-40. É possivel ver os arquivos sendo criados no S3 dentro da pasta ingested-json
+40. Após 20 segundos da inserção, execute o comando `python3 read-sqs-send-to-firehose.py` para ler os arquivos do S3 que estão listados no SQS e mandar para o Firehose. Pode executar esse comando em até 10 terminais na maquina. O processo pode ser acompanhado no painel do SQS.
+41. É possivel ver os arquivos sendo criados no S3 dentro da pasta ingested-json

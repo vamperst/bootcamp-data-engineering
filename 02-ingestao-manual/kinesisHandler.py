@@ -17,7 +17,7 @@ class KinesisHandler:
                 }
             )
         
-        print(len(listData))
+        # print(len(listData))
         # print(len(json.dumps(listData).encode('utf-8')))
         # print(len(json.dumps(listData)))
         return listData
