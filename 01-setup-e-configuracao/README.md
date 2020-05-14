@@ -23,7 +23,7 @@
 11. Execute o comando `sudo apt  install jq -y` para instalar o software que irá nos ajudar a ler e manipular Jsons no terminal
 12. Execute o comando `git clone https://github.com/vamperst/bootcamp-data-engineering.git` para clonar o repositório com os exercicios.
 13. Execute o comando `cd bootcamp-data-engineering/` para entrar na pasta criada pelo git
-14. Execute o comando `cd setup-e-configuracao/` para entrar na pasta com os scripts de Configuração.
+14. Execute o comando `cd 01-setup-e-configuracao/` para entrar na pasta com os scripts de Configuração.
 15. Precisamos aumentar o tamanho do volume(HD) do cloud9. Para isso execute o comando  `sh resize.sh`
    ![img/resizeEBS](img/resizeEBS.png)
 16. Para utilizar o SDK em python da AWS instale com o comando `pip3 install boto3`
