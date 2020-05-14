@@ -8,7 +8,7 @@
  2. Clique em `create environment`.
  3. Coloque o nome `lab-fiap` e avance.
  ![img/nomelab.png](img/nomelab.png)
- 5. Deixe as configurações como na imagem a seguir. Se atente ao tipo da maquina que deve ser t2.small:
+ 5. Deixe as configurações como na imagem a seguir. Se atente ao tipo da maquina que deve ser t2.medium:
 ![img/config.png](img/config.png)
  6. Caso os parametros estejam como na imagem a seguir clique em `Create Environment`
    ![img/review.png](img/review.png)
