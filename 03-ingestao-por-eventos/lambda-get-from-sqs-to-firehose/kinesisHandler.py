@@ -1,5 +1,6 @@
 import boto3
 import json
+import time
 
 class KinesisHandler:
     def __init__(self, streamName):
@@ -25,6 +26,10 @@ class KinesisHandler:
             Records=self.__prepareDataToFirehoseCall(listLine)
         )
         if(response['FailedPutCount'] > 0):
-            # print(response)
             print("FailedPutCount: " + str(response['FailedPutCount']))
+            if(response['FailedPutCount'] == len(listLine)):
+                time.sleep(1)
+                self.put_record(listLine)
+            # print(response)
+           
         # print(json.dumps(response))
