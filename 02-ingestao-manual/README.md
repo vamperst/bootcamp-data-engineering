@@ -42,19 +42,17 @@
 28. Clique em `Next` novamente.
 29. Na seção 'S3 destination' escolha o bucket que acabou de criar.
 30. Na seção 'S3 prefix' coloque os valores `ingested-json/` em 'Prefix - optional', `ingested-json-error/` em 'Error prefix - optional'.
-31. Na secão 'S3 backup' escolha o bucket que criou e popule `source_records_ingested/` em 'Prefix - optional' e clique em 'Next'
-    ![](img/kinesis4.png)
-32. Na seção 'S3 buffer conditions' coloque o valor `100` em 'Buffer size' e `300` em 'Buffer interval'.
+31. Na seção 'S3 buffer conditions' coloque o valor `100` em 'Buffer size' e `300` em 'Buffer interval'.
     ![](img/kinesis5.png)
-33. Na seção 'Permissions' clique em 'Create new or choose'
-34. Na aba que abriu apenas clique em 'permitir' no canto infeiror direito para criar o IAM do firehose.
+32. Na seção 'Permissions' clique em 'Create new or choose'
+33. Na aba que abriu apenas clique em 'permitir' no canto infeiror direito para criar o IAM do firehose.
     ![](img/kinesis7.png)
-35. Clique em 'Next'
-36. Revise as informações e clique em `Create delivery stream`
-37. Vamos alterar um parametro da fila `raw-json`. Vá até o painel do sqs, selecione a fila e clique em 'Açoes de fila'. Clique na opção `Configurar fila`
-38. Altere o valor de 'Tempo limite de visibilidade padrão' para `2 MINUTOS` e 'Atraso de entrega' para `20 segundos`. O primeiro parametro é o tempo que o consumidor tem para deletar o registro da fila após ler. O segundo é o tempo de atraso da primeira entrega do registro na fila, ele é interessante pois o S3 é assincrono e pode demorar alguns poucos segundos para o objeto ficar disponível.
+34. Clique em 'Next'
+35. Revise as informações e clique em `Create delivery stream`
+36. Vamos alterar um parametro da fila `raw-json`. Vá até o painel do sqs, selecione a fila e clique em 'Açoes de fila'. Clique na opção `Configurar fila`
+37. Altere o valor de 'Tempo limite de visibilidade padrão' para `2 MINUTOS` e 'Atraso de entrega' para `20 segundos`. O primeiro parametro é o tempo que o consumidor tem para deletar o registro da fila após ler. O segundo é o tempo de atraso da primeira entrega do registro na fila, ele é interessante pois o S3 é assincrono e pode demorar alguns poucos segundos para o objeto ficar disponível.
     ![](img/sqs6.png)
-39. De volta ao cloud9, altere o arquivo `read-sqs-send-to-firehose.py` colocando a URL da fila `raw-json` na variável `urlSQS`
+38. De volta ao cloud9, altere o arquivo `read-sqs-send-to-firehose.py` colocando a URL da fila `raw-json` na variável `urlSQS`
     ![](img/kinesis8.png)
-40. Após 20 segundos da inserção, execute o comando `python3 read-sqs-send-to-firehose.py` para ler os arquivos do S3 que estão listados no SQS e mandar para o Firehose.
-41. É possivel ver os arquivos sendo criados no S3 dentro da pasta ingested-json
+39. Após 20 segundos da inserção, execute o comando `python3 read-sqs-send-to-firehose.py` para ler os arquivos do S3 que estão listados no SQS e mandar para o Firehose.
+40. É possivel ver os arquivos sendo criados no S3 dentro da pasta ingested-json
