@@ -31,7 +31,7 @@
 18. Como feito no passa 14 altere a variável `arn` mas dessa vez colocando o ARN da fila `raw-json`.
     
     ![](img/ide3.png)
-19. Execute o comando `sls dpeloy`
+19. Execute o comando `sls deploy`
     ![](img/sls3.png)
 20. Se olhar o painel sqs da fila `raw-json` verá que tem um gatilho.
 21. Garanta que nenhuma pasta existe no S3 proveniente de uma execução tardia do firehose. O bucket tem que estar vazio.
