@@ -59,7 +59,7 @@
 33. Em propriedades avançadas marque `Habilitar` em `Marcador de trabalho`. Em Monitoring options marque `Métricas do trabalho` e `Continuous logging`.
     ![](img/transf3.png)
 34. Clique em `Próximo`
-35. Escolha a fonte de dados `ingested_json` e clique em `Próximo`
+35. Escolha a fonte de dados `json` e clique em `Próximo`
 36. Mantenha `Change schema` selecionado e clique em `Próximo`
 37. Selecione `Criar tabelas em seu destino de dados` e deixe como na imagem. Importante: a pasta parquet ainda não existe em seu bucket, apenas selecione seu bucket e digite `/parquet`.
     
