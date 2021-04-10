@@ -7,7 +7,7 @@
    ![](img/sqs1.png)
 3. Agora vamos configurar a `raw-json`, certifique que esta como na imagem:
    ![](img/sqs2.png)
-4. Foi necessário aumetar bastante o número máximo de recebimentos porque vamos limitar a quantidade de lambdas que consomem essa fila rodando em paralelo. Porem o SQS continua tentando entrega e recebendo a indispobilidade. Mas infos podem ser encontradas no artigo: [Lambda Concurrency Limits and SQS Triggers Don’t Mix Well](https://medium.com/@zaccharles/lambda-concurrency-limits-and-sqs-triggers-dont-mix-well-sometimes-eb23d90122e0)
+4. Foi necessário aumetar bastante o número máximo de recebimentos porque vamos limitar a quantidade de lambdas que consomem essa fila rodando em paralelo. Porem o SQS continua tentando entregar e recebendo a indispobilidade. Mias infos podem ser encontradas no artigo: [Lambda Concurrency Limits and SQS Triggers Don’t Mix Well](https://medium.com/@zaccharles/lambda-concurrency-limits-and-sqs-triggers-dont-mix-well-sometimes-eb23d90122e0)
 5. Para fazer essa ingestão vamos precisar apagar todos os arquivos que estão no bucket que criou `bootcamp-data-engineering-<SEU RM>`.
 6. Selecione todas as bastas do bucket, clique em 'ações' e 'excluir'.
    ![](img/s3-1.png)
